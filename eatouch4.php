@@ -318,7 +318,7 @@ div.req_working {
 /*********  Styling for  requirements boxes ON PLAN **********/
 
  div.req_on_plan {
- background-color:#FF6600;
+ background-color:#ecbd16;
  margin: 2px;
  
  /* to fill up row-1 course per row */
@@ -571,7 +571,7 @@ function processReqUpdate(req)
         		   
         		   /***************** OPTIONS BOX *********************/
         		  //add the select box for options OR select box for what counts including PLANNED
-        		  var selEl = $("<select></select");
+        		  var selEl = $("<select></select>");
         		  var newId="op"+req.id;
         		  $(selEl).attr("id", newId); //each select field has id "opX" where X is req.id
         		   
@@ -909,7 +909,7 @@ function initState() {
         		   
         		   /***************** OPTIONS BOX *********************/
         		  //add the select box for options OR select box for what counts including PLANNED
-        		  var selEl = $("<select></select");
+        		  var selEl = $("<select></select>");
         		  var newId="op"+req.id;
         		  $(selEl).attr("id", newId); //each select field has id "opX" where X is req.id
         		   
@@ -1229,7 +1229,7 @@ else {
 var year = startYear;
 var sem = startSem;
 
-for (i = 0; i < 30; i++)
+for (i = 0; i < 12; i++)
 {
     
 	var newElStr ='<div class="semester_block"></div>';
