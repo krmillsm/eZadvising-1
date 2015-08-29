@@ -318,7 +318,7 @@ div.req_working {
 /*********  Styling for  requirements boxes ON PLAN **********/
 
  div.req_on_plan {
- background-color:#FF6600;
+ background-color: #ecbd16;
  margin: 2px;
  
  /* to fill up row-1 course per row */
