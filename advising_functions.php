@@ -39,11 +39,13 @@ function addPlanItem($token, $studentId, $courseId, $hours,$semester, $planYear,
   //  if(empty($studentId)) return 404;
   
     $conn = new PDO(DBCONNECTSTRING, DBUSER, DBPASSWORD);
-	$sql = 'INSERT INTO course_records (id, studentId, courseId, grade, hours, semesterCode, year, reqId, type, proposedReqId) ';
-	$sql = $sql. ' VALUES (null, :studentId, :courseId, null, :hours, :semester, :year, :reqId, 2, :proposedReqId)';
+	$sql = 'INSERT INTO course_records (studentId, courseId, grade, hours, semesterCode, year, reqId, type, proposedReqId) ';
+	$sql = $sql. ' VALUES (:studentId, :courseId, null, :hours, :semester, :year, :reqId, 2, :proposedReqId)';
 	$stmt = $conn->prepare($sql); 
 
 //echo "courseid: ".$courseId;
+
+     if ($proposedReqId == '') {$proposedReqId = null;}  //Fixes mysql failure when proposedReqID is an empty string
 
     $stmt->bindParam(':studentId', $studentId);
      $stmt->bindParam(':semester', $semester);
