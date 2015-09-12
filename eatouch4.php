@@ -54,6 +54,14 @@ $_SESSION['token'] = "ABC";
                 <td>
                     <button data-show="on" onclick="showHideSummers()"> Show/Hide Summers</button>
                 </td>
+                <td>
+                    <select>
+                        <option value="">Semesters Shown</option>
+                        <option value="4">2 Years</option>
+                        <option value="8">4 Years</option>
+                        <option value="10">5 Years</option>
+                    </select>
+                </td>
             </tr>
             <!-- <tr> <td><button onclick="unplan()" > Save Plan </button> </td> </tr>
              <tr> <td><button onclick="unplan()" > Revert to Saved Plan </button></td></tr>
