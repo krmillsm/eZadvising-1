@@ -1,85 +1,46 @@
 <?php
-#
-# CSCI 490 - Software Engineering
-# Developer: Cameron Collins
-# Team: No Clue
-#
-class Course {
 
-    private $name;
-    private $department;
-    private $number;
-    private $difficulty;
+class Student {
 
+    private $name = "";
+    private $username = "":
+    private $email = "":
+    private $ezplan = 0;  //make obj
+    private $coursesCompleted = 0; //makeobj
 
-    #constructors
-    function Course() {
-        $this->name = "";
-        $this->department = "";
-        $this->number = 0;
-        $this->difficulty = 0;
+    function setName($name) {
+         if(strlen($name) > 1)
+              $this->name = $name;
     }
 
-    function Course($name, $department, $number, $difficulty) {
-        $this->name = $name;
-        $this->department = $department;
-        $this->number = $number;
-        $this->difficulty = $difficulty;
+    function setEmail($email) {
+        if(filter_var($email, FILTER_VALIDATE_EMAIL)
+            $this->email = email;
     }
 
-    #getters
     function getName() {
         return $this->name;
     }
 
-    function getDepartment() {
-        return $this->department;
+    //todo throw error
+    function setUsername($username) {
+        $MINSIZE = 3;
+        $MAXSIZE = 15;
+        if($username <= $MINSIZE)
+            die();  //too short
+
+        if($username > $MAXSIZE)
+            die();  //too long
+
+        $this->$username = $username;
     }
 
-    function getNumber() {
-        return $this->number;
+    function getEmail() {
+        return $this->email;
     }
 
-    function getDifficulty() {
-        return $this->difficulty;
-    }
-
-    #setters
-    function setName($name) {
-        if(strlen($name) > 3)
-             $this->name = $name1;
-    }
-
-    function setDepartment($department) {
-        if(strlen($department)
-            $this->department = $department;
-    }
-
-    function setNumber($number) {
-        $this->number = $number
-    }
-
-    function setDifficulty($difficulty) {
-        $this->difficulty = $difficulty;
-    }
-
-    #comparison
-    function compareTo(Course $other) {
-        if($this->getDifficulty() > other->getDifficulty())
-            return 1;
-        else if($this->getDifficulty() < other->getDifficulty()
-            return -1;
-        else
-            return 0;
-    }
-
-    #String output 
-    function toString() {
-        String toString = "";
-        toString += "Name: " + $this->name + "\n";
-        toString += "Title: " + $this->department + " " + $this->number + "\n";
-        toString += "Difficulty: " + $this->difficulty + "\n";
-        return toString;
+    function getUsername() {
+        return $this->username;
     }
 }
 
