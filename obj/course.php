@@ -12,15 +12,7 @@ class Course {
     private $difficulty;
 
 
-    #constructors
-    function Course() {
-        $this->name = "";
-        $this->department = "";
-        $this->number = 0;
-        $this->difficulty = 0;
-    }
-
-    function Course($name, $department, $number, $difficulty) {
+    function __construct($name="", $department="", $number=0, $difficulty=0) {
         $this->name = $name;
         $this->department = $department;
         $this->number = $number;
@@ -47,16 +39,16 @@ class Course {
     #setters
     function setName($name) {
         if(strlen($name) > 3)
-             $this->name = $name1;
+             $this->name = $name;
     }
 
     function setDepartment($department) {
-        if(strlen($department)
+        if(strlen($department))
             $this->department = $department;
     }
 
     function setNumber($number) {
-        $this->number = $number
+        $this->number = $number;
     }
 
     function setDifficulty($difficulty) {
@@ -65,9 +57,9 @@ class Course {
 
     #comparison
     function compareTo(Course $other) {
-        if($this->getDifficulty() > other->getDifficulty())
+        if ($this->getDifficulty() > $other->getDifficulty())
             return 1;
-        else if($this->getDifficulty() < other->getDifficulty()
+        elseif ($this->getDifficulty() < $other->getDifficulty())
             return -1;
         else
             return 0;
@@ -75,11 +67,11 @@ class Course {
 
     #String output 
     function toString() {
-        String toString = "";
-        toString += "Name: " + $this->name + "\n";
-        toString += "Title: " + $this->department + " " + $this->number + "\n";
-        toString += "Difficulty: " + $this->difficulty + "\n";
-        return toString;
+        $toString = "";
+        $toString .= "Name: " . $this->name . "\n";
+        $toString .= "Title: " . $this->department . " " . $this->number . "\n";
+        $toString .= "Difficulty: " . $this->difficulty . "\n";
+        return $toString;
     }
 }
 
