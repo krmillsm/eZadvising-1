@@ -6,13 +6,15 @@
 #
 class Course {
 
+    private $id;
     private $name;
     private $department;
     private $number;
     private $difficulty;
 
 
-    function __construct($name="", $department="", $number=0, $difficulty=0) {
+    function __construct($id=0, $name="", $department="", $number=0, $difficulty=0) {
+        $this->id = $id;
         $this->name = $name;
         $this->department = $department;
         $this->number = $number;
