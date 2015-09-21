@@ -32,7 +32,7 @@ class CourseDBList
         $stmt->execute();
 
         $result = $stmt->fetch();
-        return new Course($result['id'], $result['title'], $result['dept'], $result['num']);
+        return Course::courseFromRow($result);
 
     }
 
@@ -41,7 +41,7 @@ class CourseDBList
      * @return array - An array of course objects
      */
     public function getCoursesByGroup($gid) {
-        $sql = "Select courses.* from courses, course_groups where groupId = :gid and courseid = courses.id";
+        $sql = "Select courses.* from courses, course_groups where groupId = :gid and courseId = courses.id";
 
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(":gid", $gid);
@@ -52,7 +52,7 @@ class CourseDBList
         $ret = array();
 
         foreach ($results as $row) {
-            $ret[] = new Course($row['id'], $row['title'], $row['dept'], $row['num']);
+            $ret[] = Course::courseFromRow($row);
         }
         return $ret;
     }
