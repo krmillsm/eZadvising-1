@@ -55,6 +55,28 @@ class RecordsDBList
 
     }
 
+    public function getCompletedRecordsForRequirement(\obj\Requirment $req) {
+        // TODO: If grade gets converted to a numeric value update this function to utilize that
+        $sql = "Select * from course_records where reqId=:rid";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindValue(":rid", $req->getId());
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+
+        $ret = array();
+        foreach ($results as $row) {
+            if (\obj\Record::mapLetterGradeToNumber($row['grade']) < $req->getGrade()) {continue;}
+            $course = $this->clist->getCourseById($row['courseId']);
+            $ret[]=new \obj\Record($row['id'], $row['studentID'], $course, $row['grade'], $row['year'], $row['reqId'],
+                $row['type'], $row['proprosedReqId'], $row['semesterCode']);
+        }
+        return $ret;
+
+    }
+
+
+
     public function getAllRecords($planned=true) {
         $sql = "Select * from course_records where studentId=:id";
         if (!$planned) { $sql .= " and grade IS NOT NULL";}
