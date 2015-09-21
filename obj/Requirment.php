@@ -9,7 +9,7 @@
 namespace obj;
 
 
-class Requirment
+class Requirment implements \JsonSerializable
 {
     /**
      * @var int
@@ -47,13 +47,21 @@ class Requirment
      * @var null
      */
     private $courseOptions;
+    /**
+     * @var array
+     */
+    private $coursesCounting;
+    /**
+     * @var array
+     */
+    private $coursesCountingPlanned;
 
 
     /**
      * Requirment constructor.
      */
     public function __construct($id=0, $title="", $category="", $programid=0, $groupid=0, $hours=0, $minGrade=0,
-                                $catalogYear=0, $courses=[])
+                                $catalogYear=0, $courses=[], $coursesCounting=[], $coursesCountingPlanned=[])
     {
 
         $this->id = $id;
@@ -65,6 +73,8 @@ class Requirment
         $this->grade = $minGrade;
         $this->catalogYear = $catalogYear;
         $this->courseOptions = $courses;
+        $this->coursesCounting = $coursesCounting;
+        $this->coursesCountingPlanned = $coursesCountingPlanned;
     }
 
     /**
@@ -212,5 +222,33 @@ class Requirment
     }
 
 
-
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    function jsonSerialize()
+    {
+        $completedhours = array_reduce($this->coursesCounting, function($total, $crs) {return $total + $crs->getHours();});
+        $plannedhours = array_reduce($this->coursesCountingPlanned, function($total, $crs) {return $total + $crs->getHours();});
+        return [
+            'id' => $this->id,
+            'groupName' => $this->title,
+            'category' => $this->category,
+            'programId' => $this->programid,
+            'groupId' => $this->groupid,
+            'hours' => $this->hours,
+            'hoursCounting' => $completedhours,
+            'hoursCountingPlanned' => $plannedhours,
+            'somePlanned' => ($completedhours > 0 or $plannedhours > 0),
+            'complete' => $completedhours >= $this->hours,
+            'completePlanned' => ($completedhours + $plannedhours) >= $this->hours,
+            'courseOptions' => $this->courseOptions,
+            'coursesCounting' => $this->coursesCounting,
+            'coursesCountingPlanned' => $this->coursesCountingPlanned,
+            'catalogYear' => $this->catalogYear
+        ];
+    }
 }
