@@ -116,6 +116,48 @@ class Course {
         return $this->difficulty;
     }
 
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHours()
+    {
+        return $this->hours;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrereqGroups()
+    {
+        return $this->prereq_groups;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSemestersOffered()
+    {
+        return $this->semestersOffered;
+    }
+
+
+
     #setters
     function setTitle($title) {
         if(strlen($title) > 3)
@@ -134,6 +176,48 @@ class Course {
     function setDifficulty($difficulty) {
         $this->difficulty = $difficulty;
     }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param int $hours
+     */
+    public function setHours($hours)
+    {
+        $this->hours = $hours;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @param string $prereq_groups
+     */
+    public function setPrereqGroups($prereq_groups)
+    {
+        $this->prereq_groups = $prereq_groups;
+    }
+
+    /**
+     * @param string $semestersOffered
+     */
+    public function setSemestersOffered($semestersOffered)
+    {
+        $this->semestersOffered = $semestersOffered;
+    }
+
+
 
     #comparison
     function compareTo(Course $other) {
