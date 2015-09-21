@@ -63,6 +63,7 @@ class Record
     public function __construct($id=0, $studentId=0, $course=null, $grade=0, $year=0, $reqId=0, $type=0,
                                 $proposedReqId=0, $semesterCode=0)
     {
+        if (is_string($grade)) {$grade = Record::mapLetterGradeToNumber($grade);}
         $this->semesterCode = $semesterCode;
         $this->id = $id;
         $this->studentId = $studentId;
@@ -72,6 +73,25 @@ class Record
         $this->reqId = $reqId;
         $this->type = $type;
         $this->proposedReqId = $proposedReqId;
+    }
+
+    public static function mapLetterGradeToNumber($grade) {
+        $grade = trim($grade);
+        switch ($grade) {
+            case "A" :
+                return 4;
+            case "B":
+                return 3;
+            case "C":
+                return 2;
+            case "D":
+                return 1;
+            case "F":
+                return 0;
+            default:
+                return (int)$grade;
+        }
+
     }
 
     /**
