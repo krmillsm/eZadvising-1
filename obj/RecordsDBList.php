@@ -75,6 +75,23 @@ class RecordsDBList
 
     }
 
+    public function getPendingRecordsForRequirement(\obj\Requirment $req) {
+        $sql = "Select * from course_records where reqId=:rid and grade is NULL";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindValue(":rid", $req->getId());
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+
+        $ret = array();
+        foreach ($results as $row) {
+            $course = $this->clist->getCourseById($row['courseId']);
+            $ret[]=new \obj\Record($row['id'], $row['studentID'], $course, $row['grade'], $row['year'], $row['reqId'],
+                $row['type'], $row['proprosedReqId'], $row['semesterCode']);
+        }
+        return $ret;
+    }
+
 
 
     public function getAllRecords($planned=true) {
