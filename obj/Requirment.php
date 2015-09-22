@@ -78,6 +78,40 @@ class Requirment implements \JsonSerializable
     }
 
     /**
+     * @return array
+     */
+    public function getCoursesCounting()
+    {
+        return $this->coursesCounting;
+    }
+
+    /**
+     * @param array $coursesCounting
+     */
+    public function setCoursesCounting($coursesCounting)
+    {
+        $this->coursesCounting = $coursesCounting;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCoursesCountingPlanned()
+    {
+        return $this->coursesCountingPlanned;
+    }
+
+    /**
+     * @param array $coursesCountingPlanned
+     */
+    public function setCoursesCountingPlanned($coursesCountingPlanned)
+    {
+        $this->coursesCountingPlanned = $coursesCountingPlanned;
+    }
+
+
+
+    /**
      * @return int
      */
     public function getId()
