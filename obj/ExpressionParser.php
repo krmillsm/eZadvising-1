@@ -113,8 +113,61 @@ function ParseExpression ($expr) {
 
 function _makeTree(Iterator $tokens)
 {
-
-
+    $lasttoken = -1;
+    $validtoken = [];
+    $nodes = [null, null, null];
+    $root = null;
+    $i=0;
+    while ($tokens->valid()) {
+        $token = $tokens->current();
+        switch ($lasttoken) {
+            case -1:
+            case _Token::_AND:
+            case _Token::_OR:
+                $validtoken = [_Token::VALUE, _Token::OPENGRP];
+                break;
+            case _Token::VALUE:
+            case _Token::CLOSEGRP:
+                $validtoken = [_Token::_OR, _Token::_AND];
+                break;
+        }
+        if (!in_array($token->getType(), $validtoken)) {
+            $tnames = array_map(function($type) {return _Token::getTokenNameFromType($type);}, $validtoken);
+            throw new LogicException("Unexpected token $token->getTokenName() expected any of $tnames");
+        }
+        switch ($token->getType()) {
+            case _Token::VALUE:
+                $nodes[$i] = new ExpressionNode(ExpressionNode::PREREQ, $token->getValue());
+                break;
+            case _Token::_AND:
+                $nodes[$i] = new ExpressionNode(ExpressionNode::_AND);
+                break;
+            case _Token::_OR:
+                $nodes[$i] = new ExpressionNode(ExpressionNode::_OR);
+                break;
+            case _Token::OPENGRP:
+                $group = [];
+                $tokens->next();
+                while ($tokens->current()->getType() != _Token::CLOSEGRP and $tokens->current()->getValue() != $token->getValue()) {
+                    if (!$tokens->valid()) {throw new LogicException("Unexpected EOF missing closing parentheses");}
+                    $group[] = $tokens->current();
+                    $tokens->next();
+                }
+                $nodes[$i] = _makeTree(new ArrayIterator($group));
+                $token = $tokens->current();
+        }
+        if ($i == 2) {
+            $root = $nodes[1];
+            $root->left = $nodes[0];
+            $root->right = $nodes[2];
+            $nodes[0] = $root;
+            $i=0;
+        }
+        $i++;
+        $lasttoken = $token->getType();
+        $tokens->next();
+    }
+    return $root;
 
 }
 
