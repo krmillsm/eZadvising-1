@@ -4,6 +4,8 @@
 # Developer: Cameron Collins
 # Team: No Clue
 #
+
+require_once('ExpressionParser.php');
 class Course {
 
     private $id;
@@ -13,12 +15,13 @@ class Course {
     private $difficulty;
     private $hours;
     private $description;
-    private $prereq_groups;
+    private $prereq_expr;
     private $semestersOffered;
+    private $prereq_tree;
 
 
     function __construct($id=0, $name="", $department="", $number=0, $hours=0, $description="",
-                         $prereq_groups="", $semestersOffered="", $difficulty=0) {
+                         $prereqs="", $semestersOffered="", $difficulty=0, $computeTree=false) {
         $this->id = $id;
         $this->title = $name;
         $this->dept = $department;
@@ -26,27 +29,18 @@ class Course {
         $this->difficulty = $difficulty;
         $this->hours = $hours;
         $this->description = $description;
-        $this->prereq_groups = $prereq_groups;
-        $this->semestersOffered = $semestersOffered;
+        $this->prereq_expr = $prereqs;
+        $this->semestersOffered = Course::parseSemestersOffered($semestersOffered);
+        if ($computeTree) {
+            $this->parsePrereqExpression();
+        }
     }
 
     /**
      * Parses a prereq expression into an array of arrays of integers
-     *
-     * @param $expr
-     * @return array
      */
-    public static function parsePrereqExpression($expr){
-        //TODO: More sophisticated expression parsing might be needed
-        $expr = strtoupper($expr); //Convert string to upper case
-
-        //Uses the array map function to convert the expression to an array of arrays of integers
-        // splitting on ORs then on ANDs
-        return array_map(function($grp) { // See 1
-            return array_map(function($id) { // See 2
-                return (int)trim($id); //Strip white space and convert to integer
-            }, explode('AND', $grp)); //2: Split the given string on ANDs
-        }, explode('OR', $expr)); //1: Split the given string on ORs
+    public function parsePrereqExpression(){
+        $this->prereq_tree = ParseExpression($this->prereq_expr);
     }
 
     /**
@@ -86,16 +80,9 @@ class Course {
             }
             $args[] = $row[$col];
         }
-        if ($convert) {
-            if ($args[6] != null) {
-                $args[6] = Course::parsePrereqExpression($args[6]);
-            }
-            if ($args[7] != null) {
-                $args[7] = Course::parseSemestersOffered($args[7]);
-            }
-        }
-        return new Course(...$args);
+        $args[]=$convert;
 
+        return new Course(...$args);
     }
 
 
@@ -143,9 +130,9 @@ class Course {
     /**
      * @return string
      */
-    public function getPrereqGroups()
+    public function getPrereqExpr()
     {
-        return $this->prereq_groups;
+        return $this->prereq_expr;
     }
 
     /**
@@ -155,6 +142,16 @@ class Course {
     {
         return $this->semestersOffered;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPrereqTree()
+    {
+        return $this->prereq_tree;
+    }
+
+
 
 
 
@@ -202,11 +199,11 @@ class Course {
     }
 
     /**
-     * @param string $prereq_groups
+     * @param string $prereq_expr
      */
-    public function setPrereqGroups($prereq_groups)
+    public function setPrereqExpr($prereq_expr)
     {
-        $this->prereq_groups = $prereq_groups;
+        $this->prereq_expr = $prereq_expr;
     }
 
     /**
