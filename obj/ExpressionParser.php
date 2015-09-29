@@ -108,7 +108,9 @@ class _Token {
 }
 
 function ParseExpression ($expr) {
-
+    $expr = strtoupper(trim($expr)); //Clean up expression
+    $tokens = _tokenizer($expr);
+    return _makeTree($tokens); //Generate the tree
 }
 
 function _makeTree(Iterator $tokens)
