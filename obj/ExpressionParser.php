@@ -113,6 +113,7 @@ function ParseExpression ($expr) {
 
 function _makeTree(Iterator $tokens)
 {
+    //TODO: Handle case where there is only one token
     $lasttoken = -1;
     $validtoken = [];
     $nodes = [null, null, null];
