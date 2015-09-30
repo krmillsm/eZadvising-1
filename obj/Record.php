@@ -14,39 +14,39 @@ class Record
     /**
      * @var int
      */
-    private $semesterCode;
+    public $semesterCode;
     /**
      * @var int
      */
-    private $id;
+    public $id;
     /**
      * @var int
      */
-    private $studentId;
+    public $studentId;
     /**
      * @var null
      */
-    private $course;
+    public $course;
     /**
      * @var int
      */
-    private $grade;
+    public $grade;
     /**
      * @var int
      */
-    private $year;
+    public $year;
     /**
      * @var int
      */
-    private $reqId;
+    public $reqId;
     /**
      * @var int
      */
-    private $type;
+    public $type;
     /**
      * @var int
      */
-    private $proposedReqId;
+    public $proposedReqId;
 
     /**
      * Record constructor.

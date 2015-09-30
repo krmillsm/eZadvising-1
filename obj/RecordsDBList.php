@@ -1,5 +1,5 @@
 <?php
-
+require_once('Record.php');
 /**
  * Created by PhpStorm.
  * User: phillip
@@ -32,8 +32,8 @@ class RecordsDBList
         $result = $stmt->fetch();
 
         $course = $this->clist->getCourseById($result['courseId']);
-        return new \obj\Record($result['id'], $result['studentID'], $course, $result['grade'], $result['year'], $result['reqId'],
-            $result['type'], $result['proprosedReqId'], $result['semesterCode']);
+        return new \obj\Record($result['id'], $result['studentId'], $course, $result['grade'], $result['year'], $result['reqId'],
+            $result['type'], $result['proposedReqId'], $result['semesterCode']);
     }
     
     public function getRecordsByCourseId($id) {
@@ -48,8 +48,8 @@ class RecordsDBList
         $ret = array();
         foreach ($results as $row) {
             $course = $this->clist->getCourseById($row['courseId']);
-            $ret[]=new \obj\Record($row['id'], $row['studentID'], $course, $row['grade'], $row['year'], $row['reqId'], 
-                $row['type'], $row['proprosedReqId'], $row['semesterCode']);
+            $ret[]=new \obj\Record($row['id'], $row['studentId'], $course, $row['grade'], $row['year'], $row['reqId'],
+                $row['type'], $row['proposedReqId'], $row['semesterCode']);
         }
         return $ret;
 
@@ -68,8 +68,8 @@ class RecordsDBList
         foreach ($results as $row) {
             if (\obj\Record::mapLetterGradeToNumber($row['grade']) < $req->getGrade()) {continue;}
             $course = $this->clist->getCourseById($row['courseId']);
-            $ret[]=new \obj\Record($row['id'], $row['studentID'], $course, $row['grade'], $row['year'], $row['reqId'],
-                $row['type'], $row['proprosedReqId'], $row['semesterCode']);
+            $ret[]=new \obj\Record($row['id'], $row['studentId'], $course, $row['grade'], $row['year'], $row['reqId'],
+                $row['type'], $row['proposedReqId'], $row['semesterCode']);
         }
         return $ret;
 
@@ -86,8 +86,8 @@ class RecordsDBList
         $ret = array();
         foreach ($results as $row) {
             $course = $this->clist->getCourseById($row['courseId']);
-            $ret[]=new \obj\Record($row['id'], $row['studentID'], $course, $row['grade'], $row['year'], $row['reqId'],
-                $row['type'], $row['proprosedReqId'], $row['semesterCode']);
+            $ret[]=new \obj\Record($row['id'], $row['studentId'], $course, $row['grade'], $row['year'], $row['reqId'],
+                $row['type'], $row['proposedReqId'], $row['semesterCode']);
         }
         return $ret;
     }
@@ -106,8 +106,8 @@ class RecordsDBList
         $ret = array();
         foreach ($results as $row) {
             $course = $this->clist->getCourseById($row['courseId']);
-            $ret[]=new \obj\Record($row['id'], $row['studentID'], $course, $row['grade'], $row['year'], $row['reqId'],
-                $row['type'], $row['proprosedReqId'], $row['semesterCode']);
+            $ret[]=new \obj\Record($row['id'], $row['studentId'], $course, $row['grade'], $row['year'], $row['reqId'],
+                $row['type'], $row['proposedReqId'], $row['semesterCode']);
         }
         return $ret;
     }

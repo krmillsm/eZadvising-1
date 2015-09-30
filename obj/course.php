@@ -8,15 +8,15 @@
 require_once('ExpressionParser.php');
 class Course {
 
-    private $id;
-    private $title;
-    private $dept;
-    private $num;
-    private $difficulty;
-    private $hours;
-    private $description;
-    private $prereq_expr;
-    private $semestersOffered;
+    public $id;
+    public $title;
+    public $dept;
+    public $num;
+    public $difficulty;
+    public $hours;
+    public $description;
+    public $prereq_expr;
+    public $semestersOffered;
     private $prereq_tree;
 
 
@@ -65,20 +65,22 @@ class Course {
      * for the constructor, and the value at that position is the index of $row to use as the value; symbolically:
      *      $args(i) = $row($idxspec(i))
      *
-     * If $idxspec(i) is null, null will be passed to the constructor at that position
+     * If $idxspec(i) is <0, null will be passed to the constructor at that position
      *
      * @param $row : Any indexable variable
      * @param array $idxspec : An array that maps the index in the row to the constructor parameter
      * @param bool $convert : If true attempt to parse prereqs and semesters offered
      * @return Course
      */
-    public static function courseFromRow($row, $idxspec=[0, 5, 1, 2, 4, 6, 3, 8, null], $convert=false) {
+    public static function courseFromRow($row, $idxspec=[0, 5, 1, 2, 4, 6, 3, 7, -1], $convert=false) {
         $args = array();
         foreach ($idxspec as $col) {
-            if ($col==null){
+            if ($col<0){
                 $args[] = null;
+            } else {
+                $args[] = $row[$col];
             }
-            $args[] = $row[$col];
+
         }
         $args[]=$convert;
 

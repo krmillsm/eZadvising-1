@@ -265,8 +265,8 @@ class Requirment implements \JsonSerializable
      */
     function jsonSerialize()
     {
-        $completedhours = array_reduce($this->coursesCounting, function($total, $crs) {return $total + $crs->getHours();});
-        $plannedhours = array_reduce($this->coursesCountingPlanned, function($total, $crs) {return $total + $crs->getHours();});
+        $completedhours = array_reduce($this->coursesCounting, function($total, $crs) {return $total + $crs->getCourse()->getHours();});
+        $plannedhours = array_reduce($this->coursesCountingPlanned, function($total, $crs) {return $total + $crs->getCourse()->getHours();});
         return [
             'id' => $this->id,
             'groupName' => $this->title,
