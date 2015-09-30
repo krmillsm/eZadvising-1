@@ -14,7 +14,7 @@ class Record
     /**
      * @var int
      */
-    public $semesterCode;
+    public $semester;
     /**
      * @var int
      */
@@ -64,7 +64,7 @@ class Record
                                 $proposedReqId=0, $semesterCode=0)
     {
         if (is_string($grade)) {$grade = Record::mapLetterGradeToNumber($grade);}
-        $this->semesterCode = $semesterCode;
+        $this->semester = $semesterCode;
         $this->id = $id;
         $this->studentId = $studentId;
         $this->course = $course;
@@ -97,17 +97,17 @@ class Record
     /**
      * @return int
      */
-    public function getSemesterCode()
+    public function getSemester()
     {
-        return $this->semesterCode;
+        return $this->semester;
     }
 
     /**
-     * @param int $semesterCode
+     * @param int $semester
      */
-    public function setSemesterCode($semesterCode)
+    public function setSemester($semester)
     {
-        $this->semesterCode = $semesterCode;
+        $this->semester = $semester;
     }
 
     /**
